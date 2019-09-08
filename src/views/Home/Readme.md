@@ -1,0 +1,55 @@
+- LiveClass
+  - Dynamic import Twilio module (https://webpack.js.org/guides/code-splitting/#dynamic-imports)
+  - Components
+    - [x] Root level component which initializes LiveClass Provider
+    - [x] LiveClassConsumer (generic component to implement custom render for any model data)
+    - [x] withLiveClassModel HOC
+    - [x] JoinLiveClassPopup
+    - [x] LocalUserMedia
+    - [x] TeacherUserMedia
+    - [x] EndLiveClassPopup
+    - [x] LiveClasssLearnersButton
+    - [x] MembersDrawer
+  - model
+    - actions
+      - [x] createClass
+      - [x] joinClass
+      - [x] completeClass
+    - store
+      - Root
+        - userId
+        - companyId
+        - classId
+        - type: `TEACHER | LEARNER`
+        - participants: ParticipantsStore
+        - localUserMedia: UserMediaStore
+        - dataTrack
+      - RoomStore
+        - roomSid
+        - roomKey
+        - roomStatus
+        - roomToken
+      - DataTrack
+        - init
+          - fetchCurrentCard
+          - fetchAllConnectedLearnerProgress
+        - @action sendCardChanged
+        - @action sendProgress
+      - UserMediaStore
+        - videoPublication: Track (Twilio)
+        - audioPublication: Track (Twilio)
+        - isVideoEnabled
+        - isAudioEnabled
+      - LocalUserMediaStore extends UserMediaStore
+      - RemoteUserMediaStore extends UserMediaStore
+      - ParticipantsStore
+        - participantMedias: UserMediaStore[]
+        - @computed teacher: UserMediaStore
+        - @computed learners: UserMediaStore[]
+  - Firebase live-class collection
+    - classId
+    - type: `CARD_CHANGED | PROGRESS | CHAT`
+    - cardId
+    - userId
+    - progress
+    - message
